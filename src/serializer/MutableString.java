@@ -1,20 +1,28 @@
 package serializer;
 
-import java.io.StringReader;
-
 public class MutableString{
-	
-	int ptr;
-	StringReader str;
-	
-	public MutableString(String str) {
-		ptr = 0;
-		this.str = new StringReader(str);
-	}
-	
-	public int deserializeString() {
-		return ptr++;
-	}
-	
 
+	StringBuffer buffer;
+	int pos;
+	
+	public MutableString() {
+		this.buffer = new StringBuffer(1000);
+		this.pos = 0;
+	}
+	
+	public void append(String obj) {
+		this.buffer.append(obj);
+		this.buffer.append('|');
+	}
+	
+	public String read(int len) {
+		String s = buffer.substring(this.pos, len);
+		pos += len+1;
+		
+		return s;
+	}
+	
+	public String toString() {
+		return buffer.toString();
+	}
 }
