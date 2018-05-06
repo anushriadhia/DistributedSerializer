@@ -3,8 +3,10 @@ package serializer;
 import java.util.HashMap;
 
 import util.annotations.Tags;
-//@Tags({SERIALIZER_REGISTRY})
+import static util.annotations.Comp533Tags.SERIALIZER_REGISTRY;
 
+
+@Tags({SERIALIZER_REGISTRY})
 public class SerializerRegistry {
 	
 	static HashMap<Class, ValueSerializer> serializerMap;
@@ -23,5 +25,7 @@ public class SerializerRegistry {
 	public static ValueSerializer getValueSerializer(Class aClass) {
 		return serializerMap.get(aClass);
 	}
+	
+	
 
 }
