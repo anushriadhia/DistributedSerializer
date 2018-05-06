@@ -16,10 +16,10 @@ public class MutableString{
 	}
 	
 	public String read(int len) {
-		String s = buffer.substring(this.pos, len);
+		String str = buffer.substring(this.pos, len);
 		pos += len+1;
 		
-		return s;
+		return str;
 	}
 	
 	public String toString() {
