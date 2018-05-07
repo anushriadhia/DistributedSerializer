@@ -8,7 +8,7 @@ import java.util.HashSet;
 import serializer.TextBuffer;
 import serializer.ValueSerializer;
 
-public class StringSerialization implements ValueSerializer{
+public class StringSerializer implements ValueSerializer{
 
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)

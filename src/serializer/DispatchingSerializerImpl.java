@@ -13,6 +13,21 @@ public class DispatchingSerializerImpl implements DispatchingSerializer{
 	@Override
 	public void ObjectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
+		if(anObject instanceof Boolean) {
+			SerializerRegistry.getValueSerializer(Boolean.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		}  else if(anObject instanceof Double) {
+			SerializerRegistry.getValueSerializer(Double.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		}  else if(anObject instanceof Float) {
+			SerializerRegistry.getValueSerializer(Float.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		}  else if(anObject instanceof Integer) {
+			SerializerRegistry.getValueSerializer(Integer.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		}  else if(anObject instanceof Long) {
+			SerializerRegistry.getValueSerializer(Long.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		}  else if(anObject instanceof Short) {
+			SerializerRegistry.getValueSerializer(Short.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		}  else if(anObject instanceof String) {
+			SerializerRegistry.getValueSerializer(String.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		} 
 		
 	}
 
