@@ -5,6 +5,7 @@ import java.io.StreamCorruptedException;
 import java.nio.ByteBuffer;
 import java.util.HashSet;
 
+import serializer.TextBuffer;
 import serializer.ValueSerializer;
 
 public class LongSerializer implements ValueSerializer {
@@ -16,6 +17,9 @@ public class LongSerializer implements ValueSerializer {
 		if(anOutputBuffer instanceof ByteBuffer) {
 			((ByteBuffer) anOutputBuffer).putLong((Long) anObject);
 		}
+		else if (anOutputBuffer instanceof TextBuffer) {
+			((TextBuffer) anOutputBuffer).put(anObject);
+		}
 		
 	}
 
@@ -25,6 +29,10 @@ public class LongSerializer implements ValueSerializer {
 		
 		if(anInputBuffer instanceof ByteBuffer) {
 			return ((ByteBuffer) anInputBuffer).getLong();
+		}
+		else if(anInputBuffer instanceof TextBuffer) {
+			String str = ((TextBuffer) anInputBuffer).get();
+			return Long.parseLong(str);
 		}
 		return null;
 	}
