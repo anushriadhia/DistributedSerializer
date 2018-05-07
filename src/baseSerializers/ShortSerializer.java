@@ -5,6 +5,7 @@ import java.io.StreamCorruptedException;
 import java.nio.ByteBuffer;
 import java.util.HashSet;
 
+import serializer.TextBuffer;
 import serializer.ValueSerializer;
 
 public class ShortSerializer implements ValueSerializer{
@@ -16,6 +17,9 @@ public class ShortSerializer implements ValueSerializer{
 		if(anOutputBuffer instanceof ByteBuffer) {
 			((ByteBuffer) anOutputBuffer).putShort((Short) anObject);
 		}
+		else if(anOutputBuffer instanceof TextBuffer) {
+			((TextBuffer) anOutputBuffer).put(anObject);
+		}
 		
 	}
 
@@ -25,6 +29,9 @@ public class ShortSerializer implements ValueSerializer{
 		
 		if(anInputBuffer instanceof ByteBuffer) {
 			return ((ByteBuffer) anInputBuffer).getShort();
+		}
+		else if(anInputBuffer instanceof TextBuffer) {
+			return Short.parseShort(((TextBuffer) anInputBuffer).get());
 		}
 		return null;
 	}
