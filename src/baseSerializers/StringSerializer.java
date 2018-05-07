@@ -3,6 +3,7 @@ package baseSerializers;
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import serializer.TextBuffer;
@@ -13,12 +14,19 @@ public class StringSerializer implements ValueSerializer{
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
+		
+		int classTag = Arrays.asList(classMap).indexOf(String.class);
+		
 		if(anOutputBuffer instanceof ByteBuffer) {
+			
+			((ByteBuffer) anOutputBuffer).putInt(classTag);
+			
 			String str = (String) anObject;
 			((ByteBuffer) anOutputBuffer).putInt(str.length());
 			((ByteBuffer) anOutputBuffer).put(str.getBytes());
 		}
 		else if (anOutputBuffer instanceof TextBuffer) {
+			((TextBuffer) anOutputBuffer).put(classTag);
 			((TextBuffer) anOutputBuffer).put(anObject);
 		}
 	}

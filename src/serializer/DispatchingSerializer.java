@@ -8,7 +8,7 @@ import util.annotations.Tags;
 import static util.annotations.Comp533Tags.DISPATCHING_SERIALIZER;
 
 @Tags({DISPATCHING_SERIALIZER})
-public interface DispatchingSerializer {
+public interface DispatchingSerializer extends ClassTag{
 	void ObjectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects) 
 			throws NotSerializableException;
 	Object objectFromBuffer(Object anInputBuffer, HashSet<Object> retrievedObjects) 

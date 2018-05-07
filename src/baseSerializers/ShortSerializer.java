@@ -3,6 +3,7 @@ package baseSerializers;
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import serializer.TextBuffer;
@@ -14,10 +15,14 @@ public class ShortSerializer implements ValueSerializer{
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
 		
+		int classTag = Arrays.asList(classMap).indexOf(Short.class);
+		
 		if(anOutputBuffer instanceof ByteBuffer) {
+			((ByteBuffer) anOutputBuffer).putInt(classTag);
 			((ByteBuffer) anOutputBuffer).putShort((Short) anObject);
 		}
 		else if(anOutputBuffer instanceof TextBuffer) {
+			((TextBuffer) anOutputBuffer).put(classTag);
 			((TextBuffer) anOutputBuffer).put(anObject);
 		}
 		

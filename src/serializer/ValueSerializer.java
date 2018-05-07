@@ -9,7 +9,8 @@ import util.annotations.Tags;;
 
 @Tags({VALUE_SERIALIZER})
 
-public interface ValueSerializer {
+public interface ValueSerializer extends ClassTag {
+		
 	void objectToBuffer (Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException;
 	Object objectFromBuffer(Object anInputBuffer, Class aClass, HashSet<Object> retrievedObjects)
