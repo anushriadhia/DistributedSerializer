@@ -16,13 +16,9 @@ import static util.annotations.Comp533Tags.SERIALIZER_REGISTRY;
 @Tags({SERIALIZER_REGISTRY})
 public class SerializerRegistry {
 	
-//	BooleanSerializer booleanSerializer;
-//	DoubleSerializer doubleSerializer;
-//	FloatSerializer floatSerializer;
-//	IntegerSerializer integerSerializer;
-//	LongSerializer longSerializer;
-//	ShortSerializer shortSerializer;
-//	StringSerializer stringSerializer;
+	static DispatchingSerializer dispatchSerializer;
+	static HashMap<Class, ValueSerializer> serializerMap = new HashMap<Class, ValueSerializer>();
+
 	
 	public SerializerRegistry() {
 		registerValueSerializer(Boolean.class, new BooleanSerializer());
@@ -34,7 +30,6 @@ public class SerializerRegistry {
 		registerValueSerializer(String.class, new StringSerializer());
 	}
 
-	static HashMap<Class, ValueSerializer> serializerMap = new HashMap<Class, ValueSerializer>();
 
 	public static void registerValueSerializer (Class aClass, ValueSerializer serializer) {
 		serializerMap.put(aClass, serializer);
@@ -42,6 +37,14 @@ public class SerializerRegistry {
 
 	public static ValueSerializer getValueSerializer(Class aClass) {
 		return serializerMap.get(aClass);
+	}
+	
+	public static void registerDispatchingSerializer(DispatchingSerializer newVal) {
+		dispatchSerializer = newVal;
+	}
+	
+	public static DispatchingSerializer getDispatchingSerializer() {
+		return dispatchSerializer;
 	}
 
 	
