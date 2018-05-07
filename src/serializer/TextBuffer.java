@@ -1,5 +1,7 @@
 package serializer;
 
+import java.io.StreamCorruptedException;
+
 public class TextBuffer{
 
 	StringBuffer buffer;
@@ -11,22 +13,31 @@ public class TextBuffer{
 	}
 	
 	public void put(Object obj) {
-		this.buffer.append(obj.toString().length());
-		this.buffer.append(obj.toString());
-		this.buffer.append('|');
+		String s = obj.toString();
+		writeString(String.format("%010d", s.length()));
+		writeString(s);
 	}
 	
-	private String getString(int len) {
-		String str = buffer.substring(this.pos, len);
-		pos += len+1;
+	private String readString(int len) {
+		String s = buffer.substring(this.pos, this.pos+len);
+		this.pos += len+1; // skip past the eye-catcher character
 		
-		return str;
+		return s;
+	}
+
+	private void writeString(String s) {
+		buffer.append(s);
+		buffer.append('|'); // add an eye-catcher character as a visual aid
 	}
 	
-	public String get() {
-		int length = (int) buffer.charAt(pos);
-		pos++;
-		return getString(length);
+	public String get() throws StreamCorruptedException {
+		try {
+			int len = Integer.parseInt(readString(10));
+			return readString(len);
+		}
+		catch (NumberFormatException ex) {
+			throw new StreamCorruptedException();
+		}
 	}
 	
 	public String toString() {
