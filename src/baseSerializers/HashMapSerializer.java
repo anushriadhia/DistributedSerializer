@@ -10,6 +10,15 @@ import serializer.DispatchingSerializer;
 import serializer.SerializerRegistry;
 import serializer.TextBuffer;
 import serializer.ValueSerializer;
+import util.annotations.Tags;
+import util.trace.port.serialization.extensible.ExtensibleBufferDeserializationFinished;
+import util.trace.port.serialization.extensible.ExtensibleBufferDeserializationInitiated;
+import util.trace.port.serialization.extensible.ExtensibleValueSerializationFinished;
+import util.trace.port.serialization.extensible.ExtensibleValueSerializationInitiated;
+
+import static util.annotations.Comp533Tags.MAP_SERIALIZER;
+
+@Tags({MAP_SERIALIZER})
 
 public class HashMapSerializer implements ValueSerializer{
 	
@@ -17,6 +26,9 @@ public class HashMapSerializer implements ValueSerializer{
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
+		
+		ExtensibleValueSerializationInitiated.newCase(this, anObject, anOutputBuffer);
+		
 		int size = ((HashMap) anObject).size();
 		
 		if(anOutputBuffer instanceof ByteBuffer) {
@@ -35,11 +47,16 @@ public class HashMapSerializer implements ValueSerializer{
 				e.printStackTrace();
 			}
 		});
+		
+		ExtensibleValueSerializationFinished.newCase(this, anObject, anOutputBuffer, visitedObjects);
 	}
 
 	@Override
 	public Object objectFromBuffer(Object anInputBuffer, Class aClass, HashSet<Object> retrievedObjects)
 			throws StreamCorruptedException, NotSerializableException {
+		
+		ExtensibleBufferDeserializationInitiated.newCase(this, MAP_SERIALIZER, anInputBuffer, aClass);
+		
 		//find a better way to do this instantiation thing
 		int size = 0;
 		if(anInputBuffer instanceof ByteBuffer) {
@@ -57,6 +74,8 @@ public class HashMapSerializer implements ValueSerializer{
 			
 			newMap.put(key, value);		
 		}
+		
+		ExtensibleBufferDeserializationFinished.newCase(this, MAP_SERIALIZER, anInputBuffer, aClass, retrievedObjects);
 		
 		return newMap;
 	}
