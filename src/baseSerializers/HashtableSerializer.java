@@ -3,21 +3,22 @@ package baseSerializers;
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 
 import serializer.DispatchingSerializer;
 import serializer.SerializerRegistry;
 import serializer.TextBuffer;
 import serializer.ValueSerializer;
 
-public class ArrayListSerializer implements ValueSerializer{
+public class HashtableSerializer implements ValueSerializer {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
 		
-		int size = ((ArrayList) anObject).size();
+		int size = ((Hashtable) anObject).size();
 		
 		if(anOutputBuffer instanceof ByteBuffer) {
 			((ByteBuffer) anOutputBuffer).putInt(size);
@@ -27,9 +28,10 @@ public class ArrayListSerializer implements ValueSerializer{
 		
 		DispatchingSerializer dispatcher = SerializerRegistry.getDispatchingSerializer();
 		
-		((ArrayList) anObject).forEach((node)-> {
+		((Hashtable) anObject).forEach((key, value)-> {
 			try {
-				dispatcher.ObjectToBuffer(anOutputBuffer, node, visitedObjects);
+				dispatcher.ObjectToBuffer(anOutputBuffer, key, visitedObjects);
+				dispatcher.ObjectToBuffer(anOutputBuffer, value, visitedObjects);
 			} catch (NotSerializableException e) {
 				e.printStackTrace();
 			}
@@ -39,7 +41,6 @@ public class ArrayListSerializer implements ValueSerializer{
 	@Override
 	public Object objectFromBuffer(Object anInputBuffer, Class aClass, HashSet<Object> retrievedObjects)
 			throws StreamCorruptedException, NotSerializableException {
-		
 		//find a better way to do this instantiation thing
 		int size = 0;
 		if(anInputBuffer instanceof ByteBuffer) {
@@ -49,13 +50,17 @@ public class ArrayListSerializer implements ValueSerializer{
 		}
 		
 		DispatchingSerializer dispatcher = SerializerRegistry.getDispatchingSerializer();
-		ArrayList<Object> newSet = new ArrayList<Object>();
+		Hashtable<Object, Object> newMap = new Hashtable<Object, Object>();
+		
 		for(int i = 0; i<size; i++) {
-			newSet.add(dispatcher.objectFromBuffer(anInputBuffer, retrievedObjects));
+			Object key = dispatcher.objectFromBuffer(anInputBuffer, retrievedObjects);
+			Object value = dispatcher.objectFromBuffer(anInputBuffer, retrievedObjects);
+			
+			newMap.put(key, value);		
 		}
-		return newSet;
+		
+		return newMap;
 	}
-
 
 
 }
