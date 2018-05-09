@@ -39,16 +39,19 @@ public class HashSetSerializer implements ValueSerializer {
 	@Override
 	public Object objectFromBuffer(Object anInputBuffer, Class aClass, HashSet<Object> retrievedObjects)
 			throws StreamCorruptedException, NotSerializableException {
-		
-		
-		//not the way to do this, fix this shit
-		DispatchingSerializer dispatcher = SerializerRegistry.getDispatchingSerializer();
-	
-		HashSet<Object> newSet = new HashSet<Object>();
-		while(anInputBuffer != null) {
-			newSet.add(dispatcher.objectFromBuffer(anInputBuffer, retrievedObjects));
+		//find a better way to do this instantiation thing
+		int size = 0;
+		if(anInputBuffer instanceof ByteBuffer) {
+			size = ((ByteBuffer) anInputBuffer).getInt();
+		} else if(anInputBuffer instanceof TextBuffer) {
+			size = Integer.parseInt(((TextBuffer) anInputBuffer).get());
 		}
 		
+		DispatchingSerializer dispatcher = SerializerRegistry.getDispatchingSerializer();
+		HashSet<Object> newSet = new HashSet<Object>();
+		for(int i = 0; i<size; i++) {
+			newSet.add(dispatcher.objectFromBuffer(anInputBuffer, retrievedObjects));
+		}
 		return newSet;
 	}
 

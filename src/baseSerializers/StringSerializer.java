@@ -14,9 +14,7 @@ public class StringSerializer implements ValueSerializer{
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
-		
-		int classTag = Arrays.asList(classMap).indexOf(String.class);
-		
+				
 		if(anOutputBuffer instanceof ByteBuffer) {
 						
 			String str = (String) anObject;
