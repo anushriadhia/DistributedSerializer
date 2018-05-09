@@ -2,10 +2,12 @@ package baseSerializers;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
+import java.nio.ByteBuffer;
 import java.util.HashSet;
 
 import serializer.DispatchingSerializer;
 import serializer.SerializerRegistry;
+import serializer.TextBuffer;
 import serializer.ValueSerializer;
 
 public class HashSetSerializer implements ValueSerializer {
@@ -14,6 +16,14 @@ public class HashSetSerializer implements ValueSerializer {
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
+		
+		int size = ((HashSet) anObject).size();
+		
+		if(anOutputBuffer instanceof ByteBuffer) {
+			((ByteBuffer) anOutputBuffer).putInt(size);
+		} else if (anOutputBuffer instanceof TextBuffer) {
+			((TextBuffer) anOutputBuffer).put(size);
+		}
 		
 		DispatchingSerializer dispatcher = SerializerRegistry.getDispatchingSerializer();
 		

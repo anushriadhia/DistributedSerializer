@@ -14,15 +14,11 @@ public class IntegerSerializer implements ValueSerializer {
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
-		
-		int classTag = Arrays.asList(classMap).indexOf(Integer.class);
-		
+				
 		if(anOutputBuffer instanceof ByteBuffer) {
-			((ByteBuffer) anOutputBuffer).putInt(classTag);
 			((ByteBuffer) anOutputBuffer).putInt((Integer) anObject);
 		}
 		else if (anOutputBuffer instanceof TextBuffer) {
-			((TextBuffer) anOutputBuffer).put(classTag);
 			((TextBuffer) anOutputBuffer).put(anObject);
 		}
 		

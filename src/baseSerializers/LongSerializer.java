@@ -14,15 +14,11 @@ public class LongSerializer implements ValueSerializer {
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
-		
-		int classTag = Arrays.asList(classMap).indexOf(Long.class);
-		
+				
 		if(anOutputBuffer instanceof ByteBuffer) {
-			((ByteBuffer) anOutputBuffer).putInt(classTag);
 			((ByteBuffer) anOutputBuffer).putLong((Long) anObject);
 		}
 		else if (anOutputBuffer instanceof TextBuffer) {
-			((TextBuffer) anOutputBuffer).put(classTag);
 			((TextBuffer) anOutputBuffer).put(anObject);
 		}
 		

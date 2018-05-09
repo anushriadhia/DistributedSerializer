@@ -18,15 +18,11 @@ public class StringSerializer implements ValueSerializer{
 		int classTag = Arrays.asList(classMap).indexOf(String.class);
 		
 		if(anOutputBuffer instanceof ByteBuffer) {
-			
-			((ByteBuffer) anOutputBuffer).putInt(classTag);
-			
+						
 			String str = (String) anObject;
-			((ByteBuffer) anOutputBuffer).putInt(str.length());
 			((ByteBuffer) anOutputBuffer).put(str.getBytes());
 		}
 		else if (anOutputBuffer instanceof TextBuffer) {
-			((TextBuffer) anOutputBuffer).put(classTag);
 			((TextBuffer) anOutputBuffer).put(anObject);
 		}
 	}

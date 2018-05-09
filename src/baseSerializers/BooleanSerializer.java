@@ -15,16 +15,12 @@ public class BooleanSerializer implements ValueSerializer{
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
-		
-		int classTag = Arrays.asList(classMap).indexOf(Boolean.class);
-		
+				
 		int bool = (Boolean) anObject ? 1 : 0;		
 		if(anOutputBuffer instanceof ByteBuffer) {
-			((ByteBuffer) anOutputBuffer).putInt(classTag);
 			((ByteBuffer) anOutputBuffer).putInt(bool);
 		}
 		else if(anOutputBuffer instanceof TextBuffer) {
-			((TextBuffer) anOutputBuffer).put(classTag);
 			((TextBuffer) anOutputBuffer).put(bool);
 		}
 		

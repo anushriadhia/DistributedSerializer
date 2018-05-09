@@ -16,6 +16,13 @@ public class DispatchingSerializerImpl implements DispatchingSerializer{
 	public void ObjectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
 		
+		int classTag = Arrays.asList(classMap).indexOf(anObject.getClass());
+		if(anOutputBuffer instanceof ByteBuffer) {
+			((ByteBuffer) anOutputBuffer).putInt(classTag);
+		} else if(anOutputBuffer instanceof TextBuffer) {
+			((TextBuffer) anOutputBuffer).put(classTag);
+		}
+		
 		SerializerRegistry.getValueSerializer(anObject.getClass()).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
 		
 	}
