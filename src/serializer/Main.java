@@ -1,8 +1,9 @@
 package serializer;
 
 import java.io.StreamCorruptedException;
+import java.util.Arrays;
 
-public class Main {
+public class Main implements ClassTag{
 
 	public static void main(String[] args) throws StreamCorruptedException {
 		TextBuffer buf = new TextBuffer();
@@ -19,5 +20,13 @@ public class Main {
 		s = buf.get();           // retrieve second object => should be toString() of 1234
 		System.out.println(s);   
 		System.out.println(Integer.valueOf(s));
+		
+		System.out.println(Arrays.asList(classMap).indexOf(null));
+		System.out.println(classMap[12]);
+		
+	}
+	
+	public static void printClass(Object o) {
+		System.out.println(o.getClass());
 	}
 }

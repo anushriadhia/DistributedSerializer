@@ -19,7 +19,8 @@ public interface ClassTag {
 			ArrayList.class, 
 			Vector.class, 
 			HashMap.class, 
-			Hashtable.class	
+			Hashtable.class,
+			null
 	};
 
 }
