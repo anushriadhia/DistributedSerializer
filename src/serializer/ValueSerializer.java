@@ -9,7 +9,7 @@ import util.annotations.Tags;;
 
 @Tags({VALUE_SERIALIZER})
 
-public interface ValueSerializer extends ClassTag {
+public interface ValueSerializer {
 		
 	void objectToBuffer (Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException;

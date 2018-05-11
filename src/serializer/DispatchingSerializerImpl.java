@@ -39,6 +39,7 @@ public class DispatchingSerializerImpl implements DispatchingSerializer{
 	@Override
 	public Object objectFromBuffer(Object anInputBuffer, HashSet<Object> retrievedObjects)
 			throws StreamCorruptedException, NotSerializableException {
+
 		if (anInputBuffer instanceof ByteBuffer) {
 			Class objClass = classMap[((ByteBuffer) anInputBuffer).getInt()];
 			return SerializerRegistry

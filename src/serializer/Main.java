@@ -10,19 +10,19 @@ import java.util.HashSet;
 public class Main implements ClassTag{
 
 	public static void main(String[] args) throws StreamCorruptedException, NotSerializableException {
-		
-		ArrayList<String> list = new ArrayList<String>();
-		HashSet<Object> set = new HashSet<Object>();
-		
-		TextBuffer buffer = new TextBuffer();
-		
-		SerializerRegistry registry = new SerializerRegistry();
-		registry.getDispatchingSerializer().ObjectToBuffer(buffer, "Hello", set);
-		System.out.println(registry.getDispatchingSerializer().objectFromBuffer(buffer, set));
-		
-		
-		
-		
+//		
+//		ArrayList<String> list = new ArrayList<String>();
+//		HashSet<Object> set = new HashSet<Object>();
+//		
+//		TextBuffer buffer = new TextBuffer();
+//		
+//		SerializerRegistry registry = new SerializerRegistry();
+//		registry.getDispatchingSerializer().ObjectToBuffer(buffer, "Hello", set);
+//		System.out.println(registry.getDispatchingSerializer().objectFromBuffer(buffer, set));
+//		
+//		
+//		
+//		
 //		TextBuffer buf = new TextBuffer();
 //
 //		buf.put("Hello World");  // append a string
@@ -39,6 +39,22 @@ public class Main implements ClassTag{
 //		System.out.println(Integer.valueOf(s));
 //		
 //		System.out.println(Arrays.asList(classMap).indexOf(null));
+		
+		TextBuffer buffer = new TextBuffer();
+		int[] arr = {1, 2};
+		
+		
+		ByteBuffer buf = ByteBuffer.allocate(1000);
+//		buf.mark();
+		buf.putInt(3);
+		buf.flip();
+//		buf.reset();
+//		System.out.println();
+		System.out.println(buf.getInt());
+		
+		System.out.println(Testing.A.getClass().getName());
+//		System.out.println(Testing.A.getClass().toString());
+//		System.out.println(Enum.valueOf((enum)Testing.A, "A"));
 		
 	}
 

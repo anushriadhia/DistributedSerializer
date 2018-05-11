@@ -2,45 +2,29 @@ package miscSerializers;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
-import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import serializer.SerializerRegistry;
 import serializer.ValueSerializer;
 import util.annotations.Tags;
-import static util.annotations.Comp533Tags.ENUM_SERIALIZER;
+import static util.annotations.Comp533Tags.ARRAY_SERIALIZER;
 
-@Tags({ENUM_SERIALIZER})
-public class EnumSerializer implements ValueSerializer {
-	
-	public enum Hello{
-		HI,
-		Hey
-		
-	}
+@Tags({ARRAY_SERIALIZER})
+public class ArraySerializer implements ValueSerializer{
 
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
-		
-		String className = ((Enum) anOutputBuffer).getClass().getName();
-
-		
-		SerializerRegistry.getValueSerializer(String.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
-		
-		
-		if(anOutputBuffer instanceof ByteBuffer) {
-			
-			((Enum) anOutputBuffer).getClass().getEnumConstants();
-		}
-		
-		
+		SerializerRegistry.getValueSerializer(ArrayList.class).objectToBuffer(anOutputBuffer, Arrays.asList(anObject), visitedObjects);
 	}
 
 	@Override
 	public Object objectFromBuffer(Object anInputBuffer, Class aClass, HashSet<Object> retrievedObjects)
 			throws StreamCorruptedException, NotSerializableException {
-		return null;
+		ArrayList result =(ArrayList) SerializerRegistry.getValueSerializer(ArrayList.class).objectFromBuffer(anInputBuffer, aClass, retrievedObjects);
+		return result.toArray();
 	}
 
 }
