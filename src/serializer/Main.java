@@ -18,7 +18,7 @@ public class Main implements ClassTag{
 		ByteBuffer buffer = ByteBuffer.allocate(1000);
 		
 		SerializerRegistry.registerAll();
-		SerializerRegistry.getDispatchingSerializer().ObjectToBuffer(buffer, "Hello", set);
+		SerializerRegistry.getDispatchingSerializer().ObjectToBuffer(buffer, null, set);
 		
 		buffer.flip();
 		
