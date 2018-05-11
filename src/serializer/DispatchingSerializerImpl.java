@@ -18,7 +18,7 @@ public class DispatchingSerializerImpl implements DispatchingSerializer{
 		
 		Class objClass = (anObject==null) ? null : anObject.getClass();
 		
-		if(objClass.isEnum()) {
+		if(objClass != null && objClass.isEnum()) {
 			objClass = Enum.class;
 		}
 	
@@ -30,10 +30,6 @@ public class DispatchingSerializerImpl implements DispatchingSerializer{
 		}
 		
 		SerializerRegistry.getValueSerializer(objClass).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
-	
-				
-		
-		
 	}
 
 	@Override
@@ -55,5 +51,4 @@ public class DispatchingSerializerImpl implements DispatchingSerializer{
 		
 		return null;
 	}
-
 }

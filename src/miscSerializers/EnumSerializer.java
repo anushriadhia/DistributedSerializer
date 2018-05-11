@@ -24,16 +24,11 @@ public class EnumSerializer implements ValueSerializer {
 			throws NotSerializableException {
 		
 		String className = ((Enum) anOutputBuffer).getClass().getName();
-
 		
-		SerializerRegistry.getValueSerializer(String.class).objectToBuffer(anOutputBuffer, anObject, visitedObjects);
+		SerializerRegistry.getValueSerializer(String.class).objectToBuffer(anOutputBuffer, className, visitedObjects);
+		SerializerRegistry
 		
-		
-		if(anOutputBuffer instanceof ByteBuffer) {
-			
-			((Enum) anOutputBuffer).getClass().getEnumConstants();
-		}
-		
+//		SerializerRegistry.getValueSerializer(aClass)
 		
 	}
 
