@@ -14,11 +14,15 @@ public class Main implements ClassTag{
 		ArrayList<String> list = new ArrayList<String>();
 		HashSet<Object> set = new HashSet<Object>();
 		
-		TextBuffer buffer = new TextBuffer();
+//		TextBuffer buffer = new TextBuffer();
+		ByteBuffer buffer = ByteBuffer.allocate(1000);
 		
-		SerializerRegistry registry = new SerializerRegistry();
-		registry.getDispatchingSerializer().ObjectToBuffer(buffer, "Hello", set);
-		System.out.println(registry.getDispatchingSerializer().objectFromBuffer(buffer, set));
+		SerializerRegistry.registerAll();
+		SerializerRegistry.getDispatchingSerializer().ObjectToBuffer(buffer, "Hello", set);
+		
+		buffer.flip();
+		
+		System.out.println(SerializerRegistry.getDispatchingSerializer().objectFromBuffer(buffer, set));
 		
 		
 		

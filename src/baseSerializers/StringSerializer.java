@@ -27,6 +27,7 @@ public class StringSerializer implements ValueSerializer{
 				
 		if(anOutputBuffer instanceof ByteBuffer) {			
 			String str = (String) anObject;
+			((ByteBuffer) anOutputBuffer).putInt(str.length());
 			((ByteBuffer) anOutputBuffer).put(str.getBytes());
 		}
 		else if (anOutputBuffer instanceof TextBuffer) {
