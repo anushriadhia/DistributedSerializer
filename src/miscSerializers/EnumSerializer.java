@@ -3,6 +3,7 @@ package miscSerializers;
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import serializer.SerializerRegistry;
@@ -24,17 +25,25 @@ public class EnumSerializer implements ValueSerializer {
 			throws NotSerializableException {
 		
 		String className = ((Enum) anOutputBuffer).getClass().getName();
+		Object[] eConstants = ((Enum) anOutputBuffer).getClass().getEnumConstants();
 		
 		SerializerRegistry.getValueSerializer(String.class).objectToBuffer(anOutputBuffer, className, visitedObjects);
-		SerializerRegistry
+		SerializerRegistry.getValueSerializer(Integer.class).objectToBuffer(anOutputBuffer, eConstants.length, visitedObjects);
 		
-//		SerializerRegistry.getValueSerializer(aClass)
-		
+		for(int i = 0; i < eConstants.length; i++) {
+			SerializerRegistry.getValueSerializer(String.class).objectToBuffer(anOutputBuffer, eConstants[i].toString(), visitedObjects);
+		}		
 	}
 
 	@Override
 	public Object objectFromBuffer(Object anInputBuffer, Class aClass, HashSet<Object> retrievedObjects)
 			throws StreamCorruptedException, NotSerializableException {
+		
+		
+		
+		
+		
+		
 		return null;
 	}
 
