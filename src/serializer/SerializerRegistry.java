@@ -32,7 +32,8 @@ public class SerializerRegistry {
 	static HashMap<Class, ValueSerializer> serializerMap = new HashMap<Class, ValueSerializer>();
 
 	
-	public SerializerRegistry() {		
+	public static void registerAll() {
+		registerValueSerializer(String.class, new StringSerializer());
 		registerValueSerializer(Boolean.class, new BooleanSerializer());
 		registerValueSerializer(Double.class, new DoubleSerializer());
 		registerValueSerializer(Float.class, new FloatSerializer());
