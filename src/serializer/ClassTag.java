@@ -20,7 +20,8 @@ public interface ClassTag {
 			Vector.class, 
 			HashMap.class, 
 			Hashtable.class,
-			null
+			null,
+			Enum.class
 	};
 
 }

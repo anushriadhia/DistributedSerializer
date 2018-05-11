@@ -2,21 +2,31 @@ package miscSerializers;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
+import java.nio.ByteBuffer;
 import java.util.HashSet;
 
 import serializer.ValueSerializer;
 import util.annotations.Tags;
-import static util.annotations.Comp533Tags.NULL_SERIALIZER;
+import static util.annotations.Comp533Tags.ENUM_SERIALIZER;
 
-
-@Tags({NULL_SERIALIZER})
-public class NullSerializer implements ValueSerializer{
-
+@Tags({ENUM_SERIALIZER})
+public class EnumSerializer implements ValueSerializer {
+	
+	public enum Hello{
+		HI,
+		Hey
+		
+	}
 
 	@Override
 	public void objectToBuffer(Object anOutputBuffer, Object anObject, HashSet<Object> visitedObjects)
 			throws NotSerializableException {
-		//doNothing?
+		
+		if(anOutputBuffer instanceof ByteBuffer) {
+			
+		}
+		
+		
 	}
 
 	@Override
@@ -24,6 +34,5 @@ public class NullSerializer implements ValueSerializer{
 			throws StreamCorruptedException, NotSerializableException {
 		return null;
 	}
-	
 
 }

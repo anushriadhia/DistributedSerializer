@@ -18,6 +18,7 @@ import baseSerializers.LongSerializer;
 import baseSerializers.ShortSerializer;
 import baseSerializers.StringSerializer;
 import baseSerializers.VectorSerializer;
+import miscSerializers.NullSerializer;
 import util.annotations.Tags;
 import util.trace.port.serialization.extensible.ExtensibleSerializationTraceUtility;
 
@@ -43,6 +44,9 @@ public class SerializerRegistry {
 		registerValueSerializer(Vector.class, new VectorSerializer());
 		registerValueSerializer(HashMap.class, new HashMapSerializer());
 		registerValueSerializer(Hashtable.class, new HashtableSerializer());
+		registerValueSerializer(null, new NullSerializer());
+		
+		registerDispatchingSerializer(new DispatchingSerializerImpl());
 		
 		ExtensibleSerializationTraceUtility.setTracing();
 
