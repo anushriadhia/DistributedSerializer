@@ -17,6 +17,10 @@ public class DispatchingSerializerImpl implements DispatchingSerializer{
 			throws NotSerializableException {
 		
 		Class objClass = (anObject==null) ? null : anObject.getClass();
+		
+		if(objClass.isEnum()) {
+			objClass = Enum.class;
+		}
 	
 		int classTag = Arrays.asList(classMap).indexOf(objClass);
 		if(anOutputBuffer instanceof ByteBuffer) {
